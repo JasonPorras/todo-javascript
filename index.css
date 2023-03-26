@@ -76,6 +76,12 @@ li p {
   font-size: 1.2em;
 }
 
+.completedTask {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+
 .btn-delete:hover {
   cursor: pointer;
   background-color: lightseagreen;

@@ -35,14 +35,12 @@ class TodoList {
     if (text !== '' && option.value !== 'category') {
       const li = document.createElement('li')
       const icon3 = document.createElement("img")
-
-      icon3.setAttribute('src', this.icons.gym)
- 
-
+      icon3.setAttribute('data-iconcategory', option.value)
+      
       const p = document.createElement('p')
       p.className = 'parrafo'
       p.textContent = text
-
+      
       li.appendChild(p)
       this.ul.appendChild(li)
       li.appendChild(icon3);
@@ -52,10 +50,24 @@ class TodoList {
 
       this.input.value = ''
       this.empty.style.display = 'none'
-
+      
       category.innerHTML = option.value
       category.className = 'filter-todo'
+      const iconCategory = document.querySelectorAll('ul img');
       
+      iconCategory.forEach(item => {
+  
+        if('Home' === item.dataset.iconcategory) {
+
+          icon3.setAttribute('src', this.icons.home)
+        } else if ('University' === item.dataset.iconcategory) {
+          
+          icon3.setAttribute('src', this.icons.university)
+        } else if ('Gym' === item.dataset.iconcategory) {
+
+          icon3.setAttribute('src', this.icons.gym)
+        }
+      })
 
       icon3.innerHTML = option.value;
 
@@ -148,4 +160,4 @@ const option = document.querySelector('.filter-todo')
 const ul = document.querySelector('ul')
 const empty = document.querySelector('.empty')
 
-const todoList = new TodoList(input, addBtn, ul, empty)
+new TodoList(input, addBtn, ul, empty)

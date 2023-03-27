@@ -1,11 +1,18 @@
 class TodoList {
   static deleteAllCompleted = document.querySelector('#deleteAllCompleted')
 
-  constructor(input, addBtn, ul, empty) {
+  constructor(input, addBtn, ul,  empty, icons) {
     this.input = input
     this.addBtn = addBtn
     this.ul = ul
     this.empty = empty
+
+    this.icons = {
+      university: './icons/university.svg',
+      home: './icons/home.svg',
+      gym: './icons/gym.svg'
+    }
+   
 
     this.addBtn.addEventListener('click', (e) => {
       e.preventDefault()
@@ -15,42 +22,68 @@ class TodoList {
     TodoList.completed()
     TodoList.deleteCompleted()
   }
+  
 
   addItem() {
     const text = this.input.value
     const checkbtn = document.createElement('button')
     checkbtn.className = 'completedBtn'
-    checkbtn.textContent = '+'
+    checkbtn.textContent = '✓'
 
     const category = document.createElement('option')
 
     if (text !== '' && option.value !== 'category') {
       const li = document.createElement('li')
+      const icon3 = document.createElement("img")
+      icon3.setAttribute('data-iconcategory', option.value)
+      
       const p = document.createElement('p')
       p.className = 'parrafo'
       p.textContent = text
-
+      
       li.appendChild(p)
       this.ul.appendChild(li)
+      li.appendChild(icon3);
       li.appendChild(category)
       li.appendChild(checkbtn)
       li.appendChild(this.addDeleteBtn())
 
       this.input.value = ''
       this.empty.style.display = 'none'
-
+      
       category.innerHTML = option.value
       category.className = 'filter-todo'
+      const iconCategory = document.querySelectorAll('ul img');
+      
+      iconCategory.forEach(item => {
+  
+        if('Home' === item.dataset.iconcategory) {
+
+          icon3.setAttribute('src', this.icons.home)
+        } else if ('University' === item.dataset.iconcategory) {
+          
+          icon3.setAttribute('src', this.icons.university)
+        } else if ('Gym' === item.dataset.iconcategory) {
+
+          icon3.setAttribute('src', this.icons.gym)
+        }
+      })
+
+      icon3.innerHTML = option.value;
 
       const items = document.querySelectorAll('li')
 
       if (items.length === 0) {
         this.option.value = ''
+
       }
     } else {
       alert("There's missing Category or add a Task!")
     }
   }
+
+  
+
 
   static completed() {
     document.querySelector('.todos').addEventListener('click', (e) => {
@@ -63,6 +96,7 @@ class TodoList {
         parentLi.hasAttribute('data-task')
           ? parentLi.removeAttribute('data-task')
           : parentLi.setAttribute('data-task', 'completed')
+        parentLi.querySelector('img').classList.toggle('completedTask');
 
         // anable or disable delete all completed button
         const deleteOneTask = document.querySelector('.btn-delete')
@@ -126,4 +160,4 @@ const option = document.querySelector('.filter-todo')
 const ul = document.querySelector('ul')
 const empty = document.querySelector('.empty')
 
-const todoList = new TodoList(input, addBtn, ul, empty)
+new TodoList(input, addBtn, ul, empty)

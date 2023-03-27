@@ -61,13 +61,18 @@ class TodoList {
 
         // add data-task as completed if is it
         parentLi.hasAttribute('data-task')
-        ? parentLi.removeAttribute('data-task')
-        : parentLi.setAttribute('data-task', 'completed')
+          ? parentLi.removeAttribute('data-task')
+          : parentLi.setAttribute('data-task', 'completed')
 
         // anable or disable delete all completed button
-        document.querySelectorAll('[data-task="completed"]').length > 0
-        ? TodoList.deleteAllCompleted.disabled = false
-        : TodoList.deleteAllCompleted.disabled = true
+        const deleteOneTask = document.querySelector('.btn-delete')
+        if(document.querySelectorAll('[data-task="completed"]').length > 0) {
+          deleteOneTask.disabled = true
+          TodoList.deleteAllCompleted.disabled = false
+        } else {
+          deleteOneTask.disabled = false
+          TodoList.deleteAllCompleted.disabled = true
+        }
       }
     })
   }
@@ -77,7 +82,11 @@ class TodoList {
     TodoList.deleteAllCompleted.disabled = true
 
     TodoList.deleteAllCompleted.addEventListener('click', () => {
-      const completedTasks = document.querySelectorAll('[data-task="completed"]')
+      TodoList.deleteAllCompleted.disabled = true
+
+      const completedTasks = document.querySelectorAll(
+        '[data-task="completed"]',
+      )
 
       for (let i = 0; i < completedTasks.length; i++) {
         completedTasks[i].remove()

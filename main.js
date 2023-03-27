@@ -119,7 +119,7 @@ class TodoList {
     return deleteBtn
   }
 }
-
+console.log('Hola');
 const input = document.querySelector('input')
 const addBtn = document.querySelector('#btn-add')
 const option = document.querySelector('.filter-todo')

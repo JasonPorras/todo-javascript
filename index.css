@@ -105,3 +105,25 @@ li p {
 .empty {
   color: darkslategrey;
 }
+
+.filter-todo{
+  border-color: darkcyan;
+  border-width: 3px;
+
+  padding: 14px;
+}
+
+option{
+  padding: 15px;
+}
+
+.completedBtn{
+  margin-left: auto;
+    border: none;
+    background-color: darkcyan;
+    color: white;
+    font-weight: bold;
+    padding: 5px 8px;
+    width: 9%;
+    font-size: 1.2em;
+}

@@ -1,9 +1,16 @@
 class TodoList {
-  constructor(input, addBtn, ul, empty) {
+  constructor(input, addBtn, ul,  empty, icons) {
     this.input = input;
     this.addBtn = addBtn;
     this.ul = ul;
     this.empty = empty;
+
+    this.icons = {
+      university: './icons/university.svg',
+      home: './icons/home.svg',
+      gym: './icons/gym.svg'
+    }
+   
 
     this.addBtn.addEventListener("click", (e) => {
       e.preventDefault();
@@ -12,23 +19,30 @@ class TodoList {
     });
     TodoList.complete();
   }
+  
 
   addItem() {
     const text = this.input.value;
     const checkbtn = document.createElement("button")
     checkbtn.className = 'completedBtn';
-    checkbtn.textContent = '+';
+    checkbtn.textContent = '✓';
 
     const category = document.createElement("option");
 
     if (text !== "" && option.value !== "category") {
       const li = document.createElement("li");
+      const icon3 = document.createElement("img")
+
+      icon3.setAttribute('src', this.icons.gym)
+ 
+
       const p = document.createElement("p");
       p.className = "parrafo";
       p.textContent = text;
 
       li.appendChild(p);
       this.ul.appendChild(li);
+      li.appendChild(icon3);
       li.appendChild(category);
       li.appendChild(checkbtn);
       li.appendChild(this.addDeleteBtn());
@@ -38,15 +52,22 @@ class TodoList {
 
       category.innerHTML = option.value;
       category.className = "filter-todo";
+      
+
+      icon3.innerHTML = option.value;
 
       const items = document.querySelectorAll("li");
 
        if (items.length === 0) {
        this.option.value = "";
+
       }
     }
 
   }
+
+  
+
 
   static complete() {
     document.querySelector('.todos').addEventListener('click', (e) => {
@@ -56,6 +77,7 @@ class TodoList {
         const parentLi = e.target.parentNode;
         parentLi.querySelector('p').classList.toggle('completedTask');
         parentLi.querySelector('option').classList.toggle('completedTask');
+        parentLi.querySelector('img').classList.toggle('completedTask');
 
       }
     })

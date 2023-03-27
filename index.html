@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <title>To do</title>
   <link rel="stylesheet" href="index.css">
 </head>
@@ -15,22 +16,33 @@
     <div class="search">
       <form>
         <input type="text" placeholder="Add tasks...">
+
+
+
+        <div class="select">
+          <select name="todos" class="filter-todo">
+            <option id="addCategory" value="category">Add Category</option>
+            <option value="gym">gym</option>
+            <option value="university">university</option>
+            <option value="home">home</option>
+          </select>
+        </div>
+
+
         <button id="btn-add" class="btn-add">+</button>
       </form>
     </div>
     <!--this part is where enter tasks-->
     <div class="li-container">
-      <ul class="tasks">
+      <ul class="todos">
 
       </ul>
-      
     </div>
     <div class="empty">
       <p>Don't have tasks still...</p>
     </div>
-    <button type="button" class="deleteCompleted">Delete</button>
   </div>
- 
+
   <script src="./main.js"></script>
 </body>
 

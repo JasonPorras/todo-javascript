@@ -127,3 +127,19 @@ option{
     width: 9%;
     font-size: 1.2em;
 }
+
+.completedBtn-toogle{
+  margin-left: auto;
+    border: 2px solid darkcyan;;
+    background-color: white;
+    color: darkcyan;
+    font-weight: bold;
+    padding: 5px 8px;
+    width: 9%;
+    font-size: 1.2em;
+}
+
+.time{
+color: red;
+display: flex;
+}

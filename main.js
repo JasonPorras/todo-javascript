@@ -1,8 +1,9 @@
 class TodoList {
   static empty = document.querySelector('.empty')
   static deleteAllCompleted = document.querySelector('#deleteAllCompleted')
-
+  
   constructor(input, addBtn, ul) {
+
     this.input = input
     this.addBtn = addBtn
     this.ul = ul
@@ -40,6 +41,7 @@ class TodoList {
       const li = document.createElement('li')
       const icon3 = document.createElement('img')
       icon3.className = 'icon'
+
       icon3.setAttribute('data-iconcategory', option.value)
 
       const p = document.createElement('p')

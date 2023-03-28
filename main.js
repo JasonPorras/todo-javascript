@@ -1,8 +1,9 @@
 class TodoList {
   static empty = document.querySelector('.empty')
   static deleteAllCompleted = document.querySelector('#deleteAllCompleted')
+  
+  constructor(input, addBtn, ul) {
 
-  constructor(input, addBtn, ul, empty, icons) {
     this.input = input
     this.addBtn = addBtn
     this.ul = ul
@@ -21,6 +22,11 @@ class TodoList {
 
     TodoList.completed()
     TodoList.deleteCompleted()
+
+    // Call updateTimes function every minute
+    setInterval(() => {
+      this.updateTimes();
+    }, 60 * 1000);
   }
 
   addItem() {
@@ -34,24 +40,35 @@ class TodoList {
     if (text !== '' && option.value !== 'category') {
       const li = document.createElement('li')
       const icon3 = document.createElement('img')
+      icon3.className = 'icon'
+
       icon3.setAttribute('data-iconcategory', option.value)
 
       const p = document.createElement('p')
       p.className = 'parrafo'
       p.textContent = text
 
-      li.appendChild(p)
+      const date = new Date(); // crear nueva instancia de Date
+      const span = document.createElement("span");
+      span.className = 'time'
+
       this.ul.appendChild(li)
       li.appendChild(icon3)
+      li.appendChild(p)
+      li.appendChild(span)
       li.appendChild(category)
       li.appendChild(checkbtn)
       li.appendChild(this.addDeleteBtn())
+      li.dataset.timestamp = date.getTime(); // guardar timestamp en la propiedad "data-timestamp" del elemento li
+      span.textContent = `${this.formatTime(date.getTime())}`; // llamar a la función formatTime para mostrar el tiempo transcurrido
+
 
       this.input.value = ''
       TodoList.empty.style.display = 'none'
 
       category.innerHTML = option.value
       category.className = 'filter-todo'
+
       const iconCategory = document.querySelectorAll('ul img')
 
       iconCategory.forEach((item) => {
@@ -91,6 +108,12 @@ class TodoList {
         const parentLi = e.target.parentNode
         parentLi.querySelector('p').classList.toggle('completedTask')
         parentLi.querySelector('option').classList.toggle('completedTask')
+        parentLi.querySelector('span').classList.toggle('completedTask')
+        e.target.classList.toggle('completedBtn-toogle')
+/*
+        const hola =  document.querySelector(checkbtn).addEventListener('click', () =>{
+          hola.className.toggle('completedBtn-toogle')
+        })*/
 
         // add data-task as completed if is it
         parentLi.hasAttribute('data-task')
@@ -131,11 +154,7 @@ class TodoList {
   }
 
   addDeleteBtn() {
-    const btnCompleted = document.createElement('button')
     const deleteBtn = document.createElement('button')
-
-    btnCompleted.textContent = '*'
-    btnCompleted.className = 'btn-check '
 
     deleteBtn.textContent = 'X'
     deleteBtn.className = 'btn-delete'
@@ -155,6 +174,23 @@ class TodoList {
     })
 
     return deleteBtn
+  }
+
+  // Function to format the time elapsed
+  formatTime(timestamp) {
+    const now = new Date().getTime();
+    const minutes = Math.floor((now - timestamp) / (1000 * 60));
+    return `Added ${minutes} min ago.`;
+  }
+
+  // Function to update the time elapsed for each list item
+  updateTimes() {
+    const lis = this.ul.querySelectorAll("li");
+    lis.forEach((li) => {
+      const timestamp = parseInt(li.dataset.timestamp);
+      const span = li.querySelector("span");
+      span.textContent = `${this.formatTime(timestamp)}`;
+    });
   }
 }
 

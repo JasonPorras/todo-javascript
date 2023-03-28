@@ -1,16 +1,17 @@
 class TodoList {
+  static empty = document.querySelector('.empty')
   static deleteAllCompleted = document.querySelector('#deleteAllCompleted')
 
-  constructor(input, addBtn, ul, empty) {
+  constructor(input, addBtn, ul) {
     this.input = input
     this.addBtn = addBtn
     this.ul = ul
-    this.empty = empty
+    // TodoList.empty = empty
 
     this.icons = {
       university: './icons/university.svg',
       home: './icons/home.svg',
-      gym: './icons/gym.svg'
+      gym: './icons/gym.svg',
     }
 
     this.addBtn.addEventListener('click', (e) => {
@@ -37,7 +38,8 @@ class TodoList {
 
     if (text !== '' && option.value !== 'category') {
       const li = document.createElement('li')
-      const icon3 = document.createElement("img")
+      const icon3 = document.createElement('img')
+      icon3.className = 'icon'
       icon3.setAttribute('data-iconcategory', option.value)
 
       const p = document.createElement('p')
@@ -49,48 +51,52 @@ class TodoList {
       span.className = 'time'
 
       this.ul.appendChild(li)
+      li.appendChild(icon3)
       li.appendChild(p)
-      li.appendChild(icon3);
+      li.appendChild(span)
       li.appendChild(category)
       li.appendChild(checkbtn)
       li.appendChild(this.addDeleteBtn())
-      li.appendChild(span);
       li.dataset.timestamp = date.getTime(); // guardar timestamp en la propiedad "data-timestamp" del elemento li
       span.textContent = `${this.formatTime(date.getTime())}`; // llamar a la función formatTime para mostrar el tiempo transcurrido
 
+
       this.input.value = ''
-      this.empty.style.display = 'none'
+      TodoList.empty.style.display = 'none'
 
       category.innerHTML = option.value
       category.className = 'filter-todo'
-      const iconCategory = document.querySelectorAll('ul img');
 
-      iconCategory.forEach(item => {
+      const iconCategory = document.querySelectorAll('ul img')
 
+      iconCategory.forEach((item) => {
         if ('Home' === item.dataset.iconcategory) {
-
           icon3.setAttribute('src', this.icons.home)
         } else if ('University' === item.dataset.iconcategory) {
-
           icon3.setAttribute('src', this.icons.university)
         } else if ('Gym' === item.dataset.iconcategory) {
-
           icon3.setAttribute('src', this.icons.gym)
         }
       })
 
-      icon3.innerHTML = option.value;
+      icon3.innerHTML = option.value
 
       const items = document.querySelectorAll('li')
 
       if (items.length === 0) {
         this.option.value = ''
-
       }
-
-      this.option.selectedIndex = 0;
     } else {
       alert("There's missing Category or add a Task!")
+    }
+  }
+
+  static noTasksMessage() {
+    const items = document.querySelectorAll('li')
+
+    if (items.length === 0) {
+      this.complete = ''
+      TodoList.empty.style.display = 'block'
     }
   }
 
@@ -100,12 +106,18 @@ class TodoList {
         const parentLi = e.target.parentNode
         parentLi.querySelector('p').classList.toggle('completedTask')
         parentLi.querySelector('option').classList.toggle('completedTask')
+        parentLi.querySelector('span').classList.toggle('completedTask')
+        e.target.classList.toggle('completedBtn-toogle')
+/*
+        const hola =  document.querySelector(checkbtn).addEventListener('click', () =>{
+          hola.className.toggle('completedBtn-toogle')
+        })*/
 
         // add data-task as completed if is it
         parentLi.hasAttribute('data-task')
           ? parentLi.removeAttribute('data-task')
           : parentLi.setAttribute('data-task', 'completed')
-        parentLi.querySelector('img').classList.toggle('completedTask');
+        parentLi.querySelector('img').classList.toggle('completedTask')
 
         // anable or disable delete all completed button
         const deleteOneTask = document.querySelector('.btn-delete')
@@ -122,17 +134,21 @@ class TodoList {
 
   // delete all tasks completed
   static deleteCompleted() {
-    TodoList.deleteAllCompleted.disabled = true;
+    TodoList.deleteAllCompleted.disabled = true
 
     TodoList.deleteAllCompleted.addEventListener('click', () => {
-      TodoList.deleteAllCompleted.disabled = true;
+      TodoList.deleteAllCompleted.disabled = true
 
-      const completedTasks = document.querySelectorAll('[data-task="completed"]');
+      const completedTasks = document.querySelectorAll(
+        '[data-task="completed"]',
+      )
 
       for (let i = 0; i < completedTasks.length; i++) {
-        completedTasks[i].remove();
+        completedTasks[i].remove()
       }
-    });
+
+      TodoList.noTasksMessage()
+    })
   }
 
   addDeleteBtn() {
@@ -145,12 +161,14 @@ class TodoList {
       const item = deleteBtn.parentElement
       item.parentNode.removeChild(item)
 
-      const items = document.querySelectorAll('li')
+      // const items = document.querySelectorAll('li')
 
-      if (items.length === 0) {
-        this.complete = ''
-        this.empty.style.display = 'block'
-      }
+      // if (items.length === 0) {
+      //   this.complete = ''
+      //   TodoList.empty.style.display = 'block'
+      // }
+
+      TodoList.noTasksMessage()
     })
 
     return deleteBtn
@@ -160,7 +178,7 @@ class TodoList {
   formatTime(timestamp) {
     const now = new Date().getTime();
     const minutes = Math.floor((now - timestamp) / (1000 * 60));
-    return `${minutes} min`;
+    return `Added ${minutes} min ago.`;
   }
 
   // Function to update the time elapsed for each list item
@@ -178,6 +196,5 @@ const input = document.querySelector('input')
 const addBtn = document.querySelector('#btn-add')
 const option = document.querySelector('.filter-todo')
 const ul = document.querySelector('ul')
-const empty = document.querySelector('.empty')
 
-new TodoList(input, addBtn, ul, empty)
+new TodoList(input, addBtn, ul)

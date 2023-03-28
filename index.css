@@ -1,3 +1,11 @@
+:root {
+  --border: 2px;
+  --padding__top__button: 9px;
+  --padding__left__rigth: 11px;
+  --color__green: darkcyan;
+  --color__white: white;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -5,7 +13,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.5;
   background-color: lightseagreen;
-  color: white;
+  color: var(--color__white);
 }
 
 h1 {
@@ -16,10 +24,10 @@ h1 {
 .container {
   margin-top: 30px;
   margin-bottom: 30px;
-  width: 500px;
+  width: 700px;
   margin-left: auto;
   margin-right: auto;
-  background-color: white;
+  background-color: var(--color__white);
   padding: 30px;
 }
 
@@ -42,7 +50,7 @@ input {
 }
 
 .li-container {
-  background-color: white;
+  background-color: var(--color__white);
   width: 100%;
   color: darkslategray;
   margin-top: 20px;
@@ -59,17 +67,31 @@ li {
   display: flex;
 }
 
+.time {
+  color: rgb(177, 177, 177);
+  font-size: 12px;
+  width: 205px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 li p {
   margin: 0;
   padding: 15px;
   width: 100%;
 }
 
+.icon{
+  padding-left: 10px;
+}
+
 .btn-delete {
   margin-left: auto;
   border: none;
   background-color: #e31746;
-  color: white;
+  color: var(--color__white);
   font-weight: bold;
   padding: 5px 10px;
   width: 9%;
@@ -90,7 +112,7 @@ li p {
 .btn-add {
   padding: 5px 15px;
   border: none;
-  color: white;
+  color: var(--color__white);
   font-family: fantasy;
   background-color: teal;
   font-size: 1.4rem;
@@ -99,47 +121,37 @@ li p {
 
 .btn-add:hover {
   cursor: pointer;
-  background-color: darkcyan;
+  background-color: var(--color__green);
 }
 
 .empty {
   color: darkslategrey;
 }
 
-.filter-todo{
-  border-color: darkcyan;
+.filter-todo {
+  border-color: var(--color__green);
   border-width: 3px;
 
   padding: 14px;
 }
 
-option{
+option {
   padding: 15px;
 }
 
-.completedBtn{
+.completedBtn {
   margin-left: auto;
-    border: none;
-    background-color: darkcyan;
-    color: white;
-    font-weight: bold;
-    padding: 5px 8px;
-    width: 9%;
-    font-size: 1.2em;
+  border:var(--border) solid;
+  background-color: var(--color__white);
+  color: var(--color__green);
+  font-weight: bold;
+  padding: calc(var(--padding__top__button) - var(--border)) calc(var(--padding__left__rigth) - var(--border));
+  font-size: 1.2em;
 }
 
-.completedBtn-toogle{
-  margin-left: auto;
-    border: 2px solid darkcyan;;
-    background-color: white;
-    color: darkcyan;
-    font-weight: bold;
-    padding: 5px 8px;
-    width: 9%;
-    font-size: 1.2em;
-}
-
-.time{
-color: red;
-display: flex;
+.completedBtn-toogle {
+  border: var(--border) solid var(--color__green);
+  padding: calc(var(--padding__top__button) - var(--border)) calc(var(--padding__left__rigth) - var(--border));
+  background-color: var(--color__green);
+  color: var(--color__white);
 }
